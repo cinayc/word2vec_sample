@@ -1,16 +1,35 @@
-import gensim
 
+import numpy as np
 
 def most_similar(positive=[], negative=[], topn=20):
-    w2v = gensim.models.KeyedVectors.load_word2vec_format('./vectors_sgd.txt', binary=False)
+
+    import gensim
+    w2v = gensim.models.KeyedVectors.load_word2vec_format('./vectors_adadelta.txt', binary=False)
     for v in w2v.most_similar(positive=positive, negative=negative):
         print(v)
 
+"""
 print("Check for queen...")
 most_similar(positive=['queen'], topn=10)
 print("Check for alice...")
 most_similar(positive=['alice'], topn=10)
-print("Check for the...")
-most_similar(positive=['the'], topn=10)
+print("Check for rabbit...")
+most_similar(positive=['rabbit', 'alice'], negative=['meat'],topn=10)
+print("Check for king-man...")
+most_similar(positive=['king'], negative=['man'], topn=10)
+print("Check for queen-woman...")
+most_similar(positive=['queen'], negative=['woman'], topn=10)
 print("Check for king-he+she...")
 most_similar(positive=['king', 'she'], negative=['he'], topn=10)
+print("Check for queen-she+he...")
+most_similar(positive=['queen', 'he'], negative=['she'], topn=10)
+"""
+
+def load_model(model_filename):
+    pass
+
+def my_most_similar(positive=[], negative=[]):
+    pass
+
+def cal_l2_dist(word1, word2):
+    pass
