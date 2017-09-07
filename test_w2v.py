@@ -1,5 +1,6 @@
 
 import numpy as np
+import util_pkg
 
 def most_similar(positive=[], negative=[], topn=20):
 
@@ -25,11 +26,14 @@ print("Check for queen-she+he...")
 most_similar(positive=['queen', 'he'], negative=['she'], topn=10)
 """
 
-def load_model(model_filename):
-    pass
+path = "/home/junsoo/PycharmProjects/word2vec_sample/vectors_adadelta.txt"
 
-def my_most_similar(positive=[], negative=[]):
-    pass
+util = util_pkg.util()
+util.load_model(path=path)
+result = util.most_similar(positive=['the'], topn=10)
 
-def cal_l2_dist(word1, word2):
-    pass
+print('----------------')
+print(result)
+print('----------------')
+
+most_similar(positive=['the'], topn=10)
