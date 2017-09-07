@@ -33,7 +33,9 @@ util.load_model(path=path)
 result = util.most_similar(positive=['the'], topn=10)
 
 print('----------------')
-print(result)
+for key in result:
+    print('%s\t%f' % (key, result[key]))
+
 print('----------------')
 
 most_similar(positive=['the'], topn=10)
