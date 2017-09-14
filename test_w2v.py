@@ -5,37 +5,22 @@ import util_pkg
 def most_similar(positive=[], negative=[], topn=20):
 
     import gensim
-    w2v = gensim.models.KeyedVectors.load_word2vec_format('./vectors_adadelta.txt', binary=False)
+    w2v = gensim.models.KeyedVectors.load_word2vec_format('./vectors_nadam_corpus.txt', binary=False)
+    print('-- by gensim --')
     for v in w2v.most_similar(positive=positive, negative=negative):
         print(v)
+    print('----------------')
 
-"""
-print("Check for queen...")
-most_similar(positive=['queen'], topn=10)
-print("Check for alice...")
-most_similar(positive=['alice'], topn=10)
-print("Check for rabbit...")
-most_similar(positive=['rabbit', 'alice'], negative=['meat'],topn=10)
-print("Check for king-man...")
-most_similar(positive=['king'], negative=['man'], topn=10)
-print("Check for queen-woman...")
-most_similar(positive=['queen'], negative=['woman'], topn=10)
-print("Check for king-he+she...")
-most_similar(positive=['king', 'she'], negative=['he'], topn=10)
-print("Check for queen-she+he...")
-most_similar(positive=['queen', 'he'], negative=['she'], topn=10)
-"""
-
-path = "/home/junsoo/PycharmProjects/word2vec_sample/vectors_adadelta.txt"
+path = "/home/junsoo/PycharmProjects/word2vec_sample/vectors_nadam_corpus.txt"
 
 util = util_pkg.util()
 util.load_model(path=path)
-result = util.most_similar(positive=['the'], topn=10)
+result = util.most_similar(positive=['king', 'woman'], negative=['man'], topn=12, type='cos')
 
-print('----------------')
+print('--- by mine ---')
 for key in result:
     print('%s\t%f' % (key, result[key]))
 
 print('----------------')
 
-most_similar(positive=['the'], topn=10)
+most_similar(positive=['king', 'woman'], negative=['man'], topn=10)
