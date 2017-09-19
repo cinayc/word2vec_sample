@@ -61,6 +61,7 @@ print('Data size', len(vocabulary))
 
 # Step 2: Build the dictionary and replace rare words with UNK token.
 vocabulary_size = 50000
+# vocabulary_size = len(vocabulary)
 
 
 def build_dataset(words, n_words):
@@ -123,7 +124,12 @@ def generate_batch(batch_size, num_skips, skip_window):
   data_index = (data_index + len(data) - span) % len(data)
   return batch, labels
 
-batch, labels = generate_batch(batch_size=8, num_skips=2, skip_window=1)
+batch, labels = generate_batch(batch_size=16, num_skips=4, skip_window=2)
+print('--- batch ---')
+print(batch)
+print('--- labels ---')
+print(labels)
+
 for i in range(8):
   print(batch[i], reverse_dictionary[batch[i]],
         '->', labels[i, 0], reverse_dictionary[labels[i, 0]])
@@ -153,7 +159,7 @@ with graph.as_default():
   valid_dataset = tf.constant(valid_examples, dtype=tf.int32)
 
   # Ops and variables pinned to the CPU because of missing GPU implementation
-  with tf.device('/cpu:0'):
+  with tf.device('/gpu:0'):
     # Look up embeddings for inputs.
     embeddings = tf.Variable(
         tf.random_uniform([vocabulary_size, embedding_size], -1.0, 1.0))
@@ -191,7 +197,7 @@ with graph.as_default():
   init = tf.global_variables_initializer()
 
 # Step 5: Begin training.
-num_steps = 100001
+num_steps = 300001
 
 with tf.Session(graph=graph) as session:
   # We must initialize all variables before we use them.
