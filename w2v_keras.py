@@ -14,8 +14,8 @@ import time
 np.random.seed(13)
 
 # path = get_file('alice.txt', origin='http://www.gutenberg.org/files/11/11-0.txt')
-# path = '/home/junsoo/PycharmProjects/word2vec_sample/corpus.txt'
-path = '/home/junsoo/PycharmProjects/word2vec_sample/alice.txt'
+path = '/home/junsoo/PycharmProjects/word2vec_sample/corpus.txt'
+# path = '/home/junsoo/PycharmProjects/word2vec_sample/alice.txt'
 corpus = codecs.open(path, "r", encoding='utf-8', errors='ignore').readlines()
 
 corpus = [sentence for sentence in corpus if sentence.count(' ') >= 2]
@@ -43,8 +43,9 @@ SkipGram.summary()
 SkipGram.compile(loss='binary_crossentropy', optimizer='Nadam', metrics=['accuracy'])
 
 # epochs = 1500   # err: 0.181xxxx, acc: 0.922xxxxxx, optimizer: sgd
-# epochs = 20   # err: 0.179222128924, acc: 0.936895229888, optimizer: nadam    [259.537439 sec]
-epochs = 10
+# epochs = 20   # err: 0.179222128924, acc: 0.936895229888, optimizer: nadam,   corpus: corpus.txt    [259.537439 sec]
+# epochs = 22   # err: 0.183147965964, acc: 0.935174318012, optimizer: nadam,   corpus: corpus.txt    [261.429534 sec]
+epochs = 100
 t2s = tokenizer.texts_to_sequences(corpus)
 len_t2s = len(t2s)
 
