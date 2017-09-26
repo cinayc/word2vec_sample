@@ -28,41 +28,24 @@ import numpy as np
 from six.moves import urllib
 from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow as tf
-
+import codecs
 # Step 1: Download the data.
-url = 'http://mattmahoney.net/dc/'
-
-
-def maybe_download(filename, expected_bytes):
-  """Download a file if not present, and make sure it's the right size."""
-  if not os.path.exists(filename):
-    filename, _ = urllib.request.urlretrieve(url + filename, filename)
-  statinfo = os.stat(filename)
-  if statinfo.st_size == expected_bytes:
-    print('Found and verified', filename)
-  else:
-    print(statinfo.st_size)
-    raise Exception(
-        'Failed to verify ' + filename + '. Can you get to it with a browser?')
-  return filename
-
-filename = maybe_download('text8.zip', 31344016)
+filename = 'alice_refine.txt'
 
 
 # Read the data into a list of strings.
 def read_data(filename):
-  """Extract the first file enclosed in a zip file as a list of words."""
-  with zipfile.ZipFile(filename) as f:
-    data = tf.compat.as_str(f.read(f.namelist()[0])).split()
+  with open(filename, 'r') as f:
+    data = tf.compat.as_str(f.read()).split()
   return data
 
 vocabulary = read_data(filename)
+# print(vocabulary)
 print('Data size', len(vocabulary))
 
 # Step 2: Build the dictionary and replace rare words with UNK token.
-vocabulary_size = 50000
+vocabulary_size = 3600
 # vocabulary_size = len(vocabulary)
-
 
 def build_dataset(words, n_words):
   """Process raw inputs into a dataset."""
@@ -86,8 +69,11 @@ def build_dataset(words, n_words):
 
 data, count, dictionary, reverse_dictionary = build_dataset(vocabulary,
                                                             vocabulary_size)
-vocabulary_size = len(count)
-print("Count: ", vocabulary_size)
+print('data', len(data))
+print('count', len(count))
+print('dictionary', len(dictionary))
+print('reverse_dictionary', len(reverse_dictionary))
+
 del vocabulary  # Hint to reduce memory.
 print('Most common words (+UNK)', count[:5])
 print('Sample data', data[:10], [reverse_dictionary[i] for i in data[:10]])
@@ -128,11 +114,11 @@ def generate_batch(batch_size, num_skips, skip_window):
   data_index = (data_index + len(data) - span) % len(data)
   return batch, labels
 
-batch, labels = generate_batch(batch_size=16, num_skips=4, skip_window=2)
-print('--- batch ---')
-print(batch)
-print('--- labels ---')
-print(labels)
+batch, labels = generate_batch(batch_size=8, num_skips=2, skip_window=1)
+# print('--- batch ---')
+# print(batch)
+# print('--- labels ---')
+# print(labels)
 
 for i in range(8):
   print(batch[i], reverse_dictionary[batch[i]],

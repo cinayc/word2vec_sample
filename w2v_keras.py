@@ -16,6 +16,7 @@ np.random.seed(13)
 # path = get_file('alice.txt', origin='http://www.gutenberg.org/files/11/11-0.txt')
 path = '/home/junsoo/PycharmProjects/word2vec_sample/corpus.txt'
 # path = '/home/junsoo/PycharmProjects/word2vec_sample/alice.txt'
+path = '/home/junsoo/PycharmProjects/word2vec_sample/text8'
 corpus = codecs.open(path, "r", encoding='utf-8', errors='ignore').readlines()
 
 corpus = [sentence for sentence in corpus if sentence.count(' ') >= 2]
