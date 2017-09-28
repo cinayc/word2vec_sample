@@ -13,13 +13,33 @@ import codecs
 import time
 np.random.seed(13)
 
+"""
+    for gutenberg data
+"""
 # path = get_file('alice.txt', origin='http://www.gutenberg.org/files/11/11-0.txt')
-path = '/home/junsoo/PycharmProjects/word2vec_sample/corpus.txt'
+# path = '/home/junsoo/PycharmProjects/word2vec_sample/corpus.txt'
 # path = '/home/junsoo/PycharmProjects/word2vec_sample/alice.txt'
+#
+# corpus = codecs.open(path, "r", encoding='utf-8', errors='ignore').readlines()
+# corpus = [sentence for sentence in corpus if sentence.count(' ') >= 2]
+# print(corpus)
+"""
+    for text8 data
+"""
 path = '/home/junsoo/PycharmProjects/word2vec_sample/text8'
-corpus = codecs.open(path, "r", encoding='utf-8', errors='ignore').readlines()
+corpus = codecs.open(path, "r", encoding='utf-8', errors='ignore').read()
+words = corpus.split()
+corpus = []
+sentence = ''
+for idx,word in enumerate(words):
+    idx += 1
+    sentence += word + ' '
+    if idx % 30 == 0:
+        corpus.append(sentence.strip())
+        #print(sentence)
+        sentence = ''
 
-corpus = [sentence for sentence in corpus if sentence.count(' ') >= 2]
+
 tokenizer = Tokenizer(filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\r\t\n‘“')
 tokenizer.fit_on_texts(corpus)
 vocab_size = len(tokenizer.word_index) + 1
@@ -46,7 +66,7 @@ SkipGram.compile(loss='binary_crossentropy', optimizer='Nadam', metrics=['accura
 # epochs = 1500   # err: 0.181xxxx, acc: 0.922xxxxxx, optimizer: sgd
 # epochs = 20   # err: 0.179222128924, acc: 0.936895229888, optimizer: nadam,   corpus: corpus.txt    [259.537439 sec]
 # epochs = 22   # err: 0.183147965964, acc: 0.935174318012, optimizer: nadam,   corpus: corpus.txt    [261.429534 sec]
-epochs = 100
+epochs = 1
 t2s = tokenizer.texts_to_sequences(corpus)
 len_t2s = len(t2s)
 
@@ -93,6 +113,8 @@ for cur_epoch in range(epochs):
             loss += train_result[0]
             accuracy += train_result[1]
 
+            print("\t%d/%d: %s\t%s" % (i + 1, len_t2s, loss, accuracy))
+
     avg_loss = loss / len_t2s
     avg_acc = accuracy / len_t2s
     end_time = time.time()
@@ -101,7 +123,7 @@ for cur_epoch in range(epochs):
     print("\t%d/%d: %s\t%s\t[%f sec]" % (cur_epoch+1, epochs, avg_loss, avg_acc, duration))
 
 print("Save weights...")
-vector_filename = 'vectors_nadam_alice.txt'
+vector_filename = 'vectors_nadam_text8.txt'
 f = open(vector_filename ,'w')
 f.write('{} {}\n'.format(vocab_size - 1, dim_embedddings))
 vectors = SkipGram.get_weights()[0]
