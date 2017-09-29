@@ -31,10 +31,14 @@ corpus = codecs.open(path, "r", encoding='utf-8', errors='ignore').read()
 words = corpus.split()
 corpus = []
 sentence = ''
+
+# word_count_per_sentence = 90
+word_count_per_sentence = 1000
+
 for idx,word in enumerate(words):
     idx += 1
     sentence += word + ' '
-    if idx % 30 == 0:
+    if idx % word_count_per_sentence == 0:
         corpus.append(sentence.strip())
         #print(sentence)
         sentence = ''
@@ -113,6 +117,7 @@ for cur_epoch in range(epochs):
             loss += train_result[0]
             accuracy += train_result[1]
 
+        if i % 2000 == 0:
             print("\t%d/%d: %s\t%s" % (i + 1, len_t2s, loss, accuracy))
 
     avg_loss = loss / len_t2s
