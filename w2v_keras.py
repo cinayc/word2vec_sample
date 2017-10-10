@@ -33,7 +33,7 @@ corpus = []
 sentence = ''
 
 # word_count_per_sentence = 90
-word_count_per_sentence = 1000
+word_count_per_sentence = 110
 
 for idx,word in enumerate(words):
     idx += 1
