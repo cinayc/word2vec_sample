@@ -85,6 +85,11 @@ class util:
 
         return result
 
+
+
+
+
+
 if __name__ == '__main__':
     path = "/home/junsoo/PycharmProjects/word2vec_sample/vectors_nadam.txt"
 

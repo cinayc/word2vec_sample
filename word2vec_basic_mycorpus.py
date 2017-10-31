@@ -30,7 +30,7 @@ from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow as tf
 import codecs
 # Step 1: Download the data.
-filename = 'alice_refine.txt'
+filename = 'data.txt_refine_n1k'
 
 
 # Read the data into a list of strings.
@@ -40,12 +40,10 @@ def read_data(filename):
   return data
 
 vocabulary = read_data(filename)
-# print(vocabulary)
 print('Data size', len(vocabulary))
 
 # Step 2: Build the dictionary and replace rare words with UNK token.
-vocabulary_size = 3600
-# vocabulary_size = len(vocabulary)
+vocabulary_size = 60000
 
 def build_dataset(words, n_words):
   """Process raw inputs into a dataset."""
@@ -188,7 +186,7 @@ with graph.as_default():
   init = tf.global_variables_initializer()
 
 # Step 5: Begin training.
-num_steps = 200001
+num_steps = 300001
 
 with tf.Session(graph=graph) as session:
   # We must initialize all variables before we use them.
@@ -230,7 +228,7 @@ with tf.Session(graph=graph) as session:
 # Step 6: Visualize the embeddings.
 
 
-def plot_with_labels(low_dim_embs, labels, filename='tsne.png'):
+def plot_with_labels(low_dim_embs, labels, filename='tsne_korean.png'):
   assert low_dim_embs.shape[0] >= len(labels), 'More labels than embeddings'
   plt.figure(figsize=(18, 18))  # in inches
   for i, label in enumerate(labels):
@@ -249,6 +247,12 @@ try:
   # pylint: disable=g-import-not-at-top
   from sklearn.manifold import TSNE
   import matplotlib.pyplot as plt
+  from matplotlib import font_manager, rc
+
+  # for korean
+  font_fname = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
+  font_name = font_manager.FontProperties(fname=font_fname).get_name()
+  rc('font', family=font_name)
 
   tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000, method='exact')
   plot_only = 500

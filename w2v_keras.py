@@ -26,14 +26,18 @@ np.random.seed(13)
 """
     for text8 data
 """
-path = '/home/junsoo/PycharmProjects/word2vec_sample/text8'
+# path = '/home/junsoo/PycharmProjects/word2vec_sample/text8'
+"""
+    for korean raw data
+"""
+path = '/home/junsoo/PycharmProjects/word2vec_sample/data.txt_refine_n2k'
 corpus = codecs.open(path, "r", encoding='utf-8', errors='ignore').read()
 words = corpus.split()
 corpus = []
 sentence = ''
 
 # word_count_per_sentence = 90
-word_count_per_sentence = 110
+word_count_per_sentence = 100
 
 for idx,word in enumerate(words):
     idx += 1
@@ -117,7 +121,7 @@ for cur_epoch in range(epochs):
             loss += train_result[0]
             accuracy += train_result[1]
 
-        if i % 2000 == 0:
+        if i % 10000 == 0:
             print("\t%d/%d: %s\t%s" % (i + 1, len_t2s, loss, accuracy))
 
     avg_loss = loss / len_t2s
@@ -128,7 +132,7 @@ for cur_epoch in range(epochs):
     print("\t%d/%d: %s\t%s\t[%f sec]" % (cur_epoch+1, epochs, avg_loss, avg_acc, duration))
 
 print("Save weights...")
-vector_filename = 'vectors_nadam_text8.txt'
+vector_filename = 'vectors_nadam_korean_raw.txt'
 f = open(vector_filename ,'w')
 f.write('{} {}\n'.format(vocab_size - 1, dim_embedddings))
 vectors = SkipGram.get_weights()[0]
