@@ -28,5 +28,5 @@ def refine(filename):
 
 # filename = "alice.txt"
 # filename = "data_sample"
-filename = "data.txt"
+filename = "/data/forW2V/data.txt"
 refine(filename)

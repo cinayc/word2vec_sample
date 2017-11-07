@@ -11,7 +11,7 @@ def most_similar(path, positive=[], negative=[], topn=20):
         print(v)
     print('----------------')
 
-path = "/home/junsoo/PycharmProjects/word2vec_sample/vectors_nadam_korean_raw.txt"
+path = "/data/forW2V/vectors_nadam_korean_raw.txt"
 
 util = util_pkg.util()
 util.load_model(path=path)

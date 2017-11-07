@@ -30,7 +30,7 @@ np.random.seed(13)
 """
     for korean raw data
 """
-path = '/home/junsoo/PycharmProjects/word2vec_sample/data.txt_refine_n2k'
+path = '/data/forW2V/data.txt_refine_n2k'
 corpus = codecs.open(path, "r", encoding='utf-8', errors='ignore').read()
 words = corpus.split()
 corpus = []
@@ -132,7 +132,7 @@ for cur_epoch in range(epochs):
     print("\t%d/%d: %s\t%s\t[%f sec]" % (cur_epoch+1, epochs, avg_loss, avg_acc, duration))
 
 print("Save weights...")
-vector_filename = 'vectors_nadam_korean_raw.txt'
+vector_filename = '/data/forW2V/vectors_nadam_korean_raw.txt'
 f = open(vector_filename ,'w')
 f.write('{} {}\n'.format(vocab_size - 1, dim_embedddings))
 vectors = SkipGram.get_weights()[0]

@@ -30,7 +30,7 @@ from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow as tf
 import codecs
 # Step 1: Download the data.
-filename = 'data.txt_refine_n1k'
+filename = '/data/forW2V/data.txt_refine_n1k'
 
 
 # Read the data into a list of strings.
@@ -228,7 +228,7 @@ with tf.Session(graph=graph) as session:
 # Step 6: Visualize the embeddings.
 
 
-def plot_with_labels(low_dim_embs, labels, filename='tsne_korean.png'):
+def plot_with_labels(low_dim_embs, labels, filename='/data/forW2V/tsne_korean.png'):
   assert low_dim_embs.shape[0] >= len(labels), 'More labels than embeddings'
   plt.figure(figsize=(18, 18))  # in inches
   for i, label in enumerate(labels):
